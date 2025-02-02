@@ -1,0 +1,42 @@
+name: 'dbt_demo'
+profile: 'dbt_demo'
+
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+asset-paths: ["assets"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+
+vars:
+  user_name: 'user_name_from_project.yml'
+
+models:
+  dbt_demo:
+    +post-hook:
+      - 'GRANT SELECT ON {{ this }} TO ROLE REPORTER_AIRBNB'
+      
+
+    staging:
+      +database: stg
+      +schema: airbnb
+      +materialized: table
+    integration:
+      +database: int
+      +schema: airbnb
+      +materialized: table
+      +persist_docs:
+        relation: true
+        columns: true
+    dwh:
+      +database: dwh
+      +schema: airbnb
+      +materialized: table
+      
+
+seeds:
+  dbt_demo:
+    +database: int
+    +schema: airbnb

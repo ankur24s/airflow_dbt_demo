@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: src_hosts
+    description: "This model contains hosts information from the raw hosts data."
+    columns:
+      - name: host_id
+        description: "Unique identifier for each host."
+      - name: host_name
+        description: "Name of the host"
+      - name: is_superhost
+        description: "Whether the host is superhost."
+      - name: created_at
+        description: "The timestamp when the user was created."
+      - name: updated_at
+        description: "The timestamp when the user was created."
+
+    config:
+      post_hook:
+        - 'COMMENT ON TABLE {{ this }} IS ''This model contains hosts from the raw hosts TEST'''
+
+        - 'COMMENT ON COLUMN {{ this }}.host_id IS ''Unique identifier of each host.'''
+
+        - 'COMMENT ON COLUMN {{ this }}.host_name IS ''Name of the host'''
+
+        - 'COMMENT ON COLUMN {{ this }}.is_superhost IS ''Whether the host is superhost or not.'''
+
+        - 'COMMENT ON COLUMN {{ this }}.created_at IS ''Timestamp when the user was created. '''
+        
+        - 'COMMENT ON COLUMN {{ this }}.updated_at IS ''Timestamp when the user was updated.'''
+   

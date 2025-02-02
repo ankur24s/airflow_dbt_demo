@@ -1,0 +1,28 @@
+sources:
+
+  - name: raw_airbnb
+    database: raw
+    schema: airbnb
+    freshness:
+      warn_after: {count: 12, period: hour}  # Warn if data hasn't been updated in the last 12 hours
+      error_after: {count: 24, period: hour} # Error if data hasn't been updated in the last 24 hours
+
+    tables:
+      - name: hosts
+        identifier: raw_hosts
+        
+      - name: listings
+        identifier: raw_listings
+        columns:
+          - name: room_type
+            tests:
+              - dbt_expectations.expect_column_distinct_count_to_equal:
+                  value: 4
+          
+          - name: price
+            tests:
+              - dbt_expectations.expect_column_values_to_match_regex:
+                  regex: "^\\\\$[0-9][0-9.]+$"
+        
+      - name: reviews
+        identifier: raw_reviews
