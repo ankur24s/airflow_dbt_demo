@@ -13,10 +13,16 @@ clean-targets:         # directories to be removed by `dbt clean`
 vars:
   user_name: 'user_name_from_project.yml'
 
+on-run-end:
+  - "{{ log_failed_tests(test_name, error_message) }}"
+
+
+
 models:
   dbt_demo:
     +post-hook:
       - 'GRANT SELECT ON {{ this }} TO ROLE REPORTER_AIRBNB'
+
       
 
     staging:

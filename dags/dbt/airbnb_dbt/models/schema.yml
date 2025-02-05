@@ -27,7 +27,7 @@ models:
               values: ['Entire home/apt',
                       'Private room',
                       'Shared room',
-                      'Hotel room']
+                      'Hotel room0']
       
       - name: minimum_nights
         description: '{{ doc("dim_listings_minimum_nights") }}'
